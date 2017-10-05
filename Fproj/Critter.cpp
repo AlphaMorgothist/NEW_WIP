@@ -344,7 +344,7 @@ void Skeleton::Attack(Creature * other)
 
 void Skeleton::SpecialAttack(Creature * other)
 {
-	int newdam = m_Damage * (rand() % 5 + 1);
+	int newdam = m_Damage * (rand() % 5 + 2);
 	CFlav("redback");
 	cout << "\n" << m_Name << " performs a special attack inflicting " << newdam << " damage on " << other->GetName() << endl;
 	cout << "Your attack is heavier due to Revenge of the Dead" << endl;
