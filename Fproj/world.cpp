@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "world.h"
 #include <algorithm>
+
+
+
 int randNum(Player *player) {
 	random_device rd{};
 	mt19937 engine{ rd() };
-	uniform_real_distribution<double> dist1{ 0.0, player->GetXP() };
+	uniform_real_distribution<double> dist1{ 5.0, player->GetXP() + 10 };
 	int num = dist1(engine);
 	return num;
 }
@@ -30,6 +33,7 @@ m_RoomType(RandRoom()), m_pNext(NULL), m_pBack(NULL)
 
 	switch (chance) {
 	case 1: {
+		cout << "\nYou see a couple of demons wrestling in the near vicinity. They turn to look at you" << endl;
 		m_Type = 1;
 		Creature *En1 = new Dragon();
 		Creature *En2 = new Dragon();
@@ -63,7 +67,7 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 	if (m_Type == me->GetType()) {
 		int choice;
 		while (true) {
-			cout << "\nThe creatures in this room can be controlled by your class. Would you like to subjugate them, or battle them to train\n your existing monsters?" << endl;
+			cout << "\nThe creatures in this room can be controlled by your class. \nWould you like to subjugate them, or battle them to train your existing monsters?" << endl;
 			cout << "\n1: Subjugate" << endl;
 			cout << "2: Battle" << endl;
 			cout << "\nChoice: ";
@@ -88,9 +92,21 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 	while (!mobs.empty() && !(me->GetMonsters())->empty()) {
 
 		cout << "\nThe creatures in the room are aggressive! You enter battle:" << endl;
+		cout << "\nEnemies:" << endl;
+		CFlav("red");
+		for (iter = mobs.begin(); iter < mobs.end(); iter++) {
+			CFlav("red");
+			cout << (*iter)->GetName();
+			CFlav("reset");
+			cout << "'s HP: " << (*iter)->GetHealth() << endl;
+		}
+		CFlav("reset");
+		cout << endl;
 		//Player creature attack
 		if (!mobs.empty() && !me->GetMonsters()->empty()) {
-			cout << "\n\t\tYour attacks: " << endl;
+			cout << endl;
+			cout << "\n\t\tYour turn: " << endl;
+			cout << "***********************************************\n" << endl;
 			for (iter = me->GetMonsters()->begin(); iter < me->GetMonsters()->end(); iter++)
 			{
 				(*iter)->PassTime();
@@ -98,7 +114,15 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 				for (iter2 = mobs.begin(); iter2 < mobs.end(); iter2++)
 				{
 					if (iter == me->GetMonsters()->begin()) {
-						cout << (*iter)->GetName() << "'s attack on " << (*iter2)->GetName() << ":" << endl;
+						cout << endl;
+						CFlav("blue");
+						cout << (*iter)->GetName();
+						CFlav("reset");
+						cout << "'s attack on ";
+						CFlav("red");
+						cout << (*iter2)->GetName();
+						CFlav("reset");
+						cout << ":" << endl;
 						(*iter)->DisplayAttacks();
 						cout << "\nChoice: ";
 						while (true) {
@@ -107,6 +131,8 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 							else cout << "Invalid choice. Try again:";
 						}
 						system("CLS");
+						cout << "\n\t\tYour attacks:" << endl;
+						cout << "***********************************************\n" << endl;
 					}
 					else { choice = 1; }
 					switch (choice) {
@@ -117,6 +143,8 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 							//Enemy Deletion
 							mobs.erase(iter2);
 							(*iter)->Training();
+							(*iter)->SpecialRecharge();
+							cout << "Your creature has consumed the soul of his defeated enemy, and has regained the use of special attacks" << endl;
 							(*iter)->GetFood(randNum(me));
 							break;
 						}
@@ -142,13 +170,15 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 					}
 					}break;
 					}
-				}
+					Sleep(900);
+				}Sleep(900);
 			}
 		}
 
 		//Mob attack
 		if (!mobs.empty() && !me->GetMonsters()->empty()) {
 			cout << "\n\t\tMonster attacks: " << endl;
+			cout << "***********************************************" << endl;
 			for (iter = mobs.begin(); iter < mobs.end(); iter++)
 			{
 				for (iter2 = me->GetMonsters()->begin(); iter2 < me->GetMonsters()->end(); iter2++)
@@ -165,19 +195,27 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 							}
 						}
 					}
-					Sleep(500);
-				}	Sleep(520);
+					Sleep(900);
+				}	Sleep(920);
 			}
 		}
 		cout << endl;
+		Sleep(4000);
+		system("CLS");
 		cout << "\nEnemies:" << endl;
 		for (iter = mobs.begin(); iter < mobs.end(); iter++) {
-			cout << (*iter)->GetName() << "'s HP: " << (*iter)->GetHealth() << endl;
+			CFlav("red");
+			cout << (*iter)->GetName();
+			CFlav("reset");
+			cout << "'s HP: " << (*iter)->GetHealth() << endl;
 		}
 		cout << endl;
 		cout << "\nFriendly Monsters:" << endl;
 		for (iter = me->GetMonsters()->begin(); iter < me->GetMonsters()->end(); iter++) {
-			cout << (*iter)->GetName() << "'s HP: " << (*iter)->GetHealth() << endl;
+			CFlav("blue");
+			cout << (*iter)->GetName();
+			CFlav("reset");
+			cout << "'s HP: " << (*iter)->GetHealth() << endl;
 		}
 		cout << endl;
 		system("pause");
@@ -197,13 +235,40 @@ void Rooms::Play(Player *me)
 	}
 	if (!me->GetMonsters()->empty()) {
 		cout << "[Room Clear]" << endl;
+		//Creature care menu
 		cout << "\nWould you like to take this time to inspect your creatures?(y/n)" << endl;
 		char resp;
-		while (true) {
-			cout << "Choice:";
-			cin >> resp;
-			//CURRENT WIP
-			if (resp == 'y' || resp == 'Y');
+		cout << "Choice:";
+		cin >> resp;
+		if (resp == 'y' || resp == 'Y') {
+			vector<Creature*>::iterator iter;
+			for (iter = me->GetMonsters()->begin(); iter < me->GetMonsters()->end(); iter++) {
+				//CURRENT WIP
+				CFlav("blue");
+				cout << (*iter)->GetName();
+				CFlav("reset");
+				cout << "\tHP:" << (*iter)->GetHealth() << " DAM:" << (*iter)->GetDam() << " DODGE:" << (*iter)->GetDodge() << " INITIATIVE:" << (*iter)->GetInit() << endl;
+			}
+			for (iter = me->GetMonsters()->begin(); iter < me->GetMonsters()->end(); iter++) {
+				int tempN;
+				while (true) {
+					cout << "\nCreature: " << (*iter)->GetName() << endl;
+					cout << "Options:" << endl;
+					cout << "\t1:Make it eat the food it's carrying (if any)" << endl;
+					cout << "\t2:Communicate with it" << endl;
+					cout << "\t0:Next Creature/End" << endl;
+					cout << "\nChoice: ";
+					cin >> tempN;
+					system("CLS");
+					switch (tempN)
+					{
+					case 0: {break; }break;
+					case 1: {(*iter)->Feed(); }break;
+					case 2: {(*iter)->Talk(); }break;
+					}
+					if (tempN == 0)break;
+				}
+			}
 		}
 	}
 	else {
@@ -268,9 +333,9 @@ void World::Play()
 	//Inputs from player for class select and name (op)
 	//Creature *tmp = new Dragon("Hitachi", 50);
 	Player *Plyr = NULL;
-	cout << "Welcome to DaskuG's Inferno" << endl;
+	cout << "\n\t\tWelcome to DaskuG's Inferno" << endl;
 	//Insert flavour for beginning of game
-	cout << "\n\t\tClass Selection: " << endl;
+	cout << "\n\tClass Selection: " << endl;
 	cout << "\n1: Demon King (commands Demons)" << endl;
 	cout << "2: Necromancer (commands Skeletons)" << endl;
 	cout << "3: Spectre (Commands Spirits)" << endl;
