@@ -1,0 +1,12 @@
+To do:
+
+Creautures	- Make other sub classes	CHECK
+			- Make special attacks		CHECK
+			- Get capture functions		CHECK
+			- Pickup for food			CHECK
+			- Creature Care Menu 
+
+Rooms		-Add inventory
+			-P/U to inventory
+			-Random creature gen		CHECK
+

@@ -1,0 +1,7 @@
+﻿  world.cpp
+c:\users\micha\source\repos\fproj\fproj\world.cpp(86): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Critter.cpp
+c:\users\micha\source\repos\fproj\fproj\critter.cpp(167): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+c:\users\micha\source\repos\fproj\fproj\world.cpp(105): warning C4715: 'Rooms::RandRoom': not all control paths return a value
+LINK : fatal error LNK1168: cannot open C:\Users\micha\source\repos\Fproj\Debug\Fproj.exe for writing
