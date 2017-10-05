@@ -197,6 +197,14 @@ void Rooms::Play(Player *me)
 	}
 	if (!me->GetMonsters()->empty()) {
 		cout << "[Room Clear]" << endl;
+		cout << "\nWould you like to take this time to inspect your creatures?(y/n)" << endl;
+		char resp;
+		while (true) {
+			cout << "Choice:";
+			cin >> resp;
+			//CURRENT WIP
+			if (resp == 'y' || resp == 'Y');
+		}
 	}
 	else {
 		cout << "You have failed. Your monsters are dead and you are trapped in Hell forever." << endl;
