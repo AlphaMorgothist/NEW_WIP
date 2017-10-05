@@ -225,8 +225,6 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 
 void Rooms::Play(Player *me)
 {
-	//Room Number
-	cout << "\nCurrent Room XP: " << me->GetXP() << endl;
 	//Room Flavour
 	cout << m_RoomType << endl;
 	//Combat check
@@ -235,6 +233,9 @@ void Rooms::Play(Player *me)
 	}
 	if (!me->GetMonsters()->empty()) {
 		cout << "[Room Clear]" << endl;
+		//Room Number
+		cout << "\nCurrent Room XP: " << me->GetXP() << endl;
+
 		//Creature care menu
 		cout << "\nWould you like to take this time to inspect your creatures?(y/n)" << endl;
 		char resp;
@@ -284,25 +285,42 @@ void Rooms::Play(Player *me)
 
 string Rooms::RandRoom()
 {
-		srand(time(NULL));
-		int chance = rand() % 300;
-		if (chance > 200) chance = 1;
-		else if (chance > 100) chance = 2;
-		else chance = 3;
-		switch (chance) {
-		case 1: {
-			string room = "You enter the necropolis";
-			return room;
-		}break;
-		case 2: {
-			string room = "You enter the inferno";
-			return room;
-		}break;
-		case 3: {
-			string room = "You enter the Soul Den";
-			return room;
-		}break;
-		}
+	srand(time(NULL));
+	int chance = rand() % 7 + 1;
+	switch (chance) {
+	case 1: {
+		string room = "You stand in the Necropolis. The city of the dead.\nYou feel 1000 piercing eyes staring at you yet cannot see a soul.";
+		return room;
+	}break;
+	case 2: {
+		string room = "You stand in a blazing inferno\nThe walls are engulfed in flames, and there is only one way out.\nDirectly forward";
+		return room;
+	}break;
+	case 3: {
+		string room = "You stand in the Soul Den\nThe floor is littered with wailing souls clawing for the door ahead of you.";
+		return room;
+	}break;
+	case 4: {
+		string room = "You stand in the Abyss\nDarkness surrounds you, The only light comes from the door ahead of you.";
+		return room;
+	}break;
+	case 5: {
+		string room = "You stand in a hall with walls comprised of lost souls\nThe screams of the tortured echo endlessly.";
+		return room;
+	}break;
+	case 6: {
+		string room = "You stand in the Unholy Temple\nHorrifying beasts stand in the atrium above you watching your every move";
+		return room;
+	}break;
+	case 7: {
+		string room = "You stand in a large butcher shop\nA hulking behemoth is slicing a man into chunks on a large slab in the corner";
+		return room;
+	}break;
+	case 8: {
+		string room = "You stand in a swamp filled with pieces of flesh and bone\nThe pieces are crawling and rolling toward one another.\nSlowly merging to form horrifying abominations";
+		return room;
+	}break;
+	}
 }
 
 World::World():
@@ -331,7 +349,6 @@ void World::LastRoom()
 void World::Play()
 {
 	//Inputs from player for class select and name (op)
-	//Creature *tmp = new Dragon("Hitachi", 50);
 	Player *Plyr = NULL;
 	cout << "\n\t\tWelcome to DaskuG's Inferno" << endl;
 	//Insert flavour for beginning of game
