@@ -9,6 +9,8 @@
 
 using namespace std;
 
+void CFlav(string colour);
+
 //Monster base class
 class Creature {
 public:
@@ -20,6 +22,8 @@ public:
 	int GetHealth();
 	void SetHealth(int num);
 	void TakeDam(int dam);
+	int GetDam();
+	int GetDodge();
 	bool IsLiving();
 	bool IsHitBy(Creature other);
 	void Training();
