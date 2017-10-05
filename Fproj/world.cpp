@@ -343,7 +343,13 @@ void World::LastRoom()
 	if (m_pCurrent->m_pBack != NULL) {
 		m_pCurrent = m_pCurrent->m_pBack;
 	}
-	else { cout << "\nThere is no going back" << endl; }
+	
+	else {
+		CFlav("yellow");
+		cout << "\nThere is no going back" << endl;
+		CFlav("reset");
+	}
+
 }
 //Insert flavour for beginning of game**
 void World::Play()
