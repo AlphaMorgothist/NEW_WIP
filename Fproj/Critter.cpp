@@ -51,24 +51,7 @@ void TestFight() {
 	system("pause");
 }
 
-void CFlav(string colour) {
-	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
-	if (colour == "red") {
-		SetConsoleTextAttribute(h, 0x04);
-	}
-	else if (colour == "blue") {
-		SetConsoleTextAttribute(h, 0x0B);
-	}
-	else if (colour == "reset") {
-		SetConsoleTextAttribute(h, 0x0F);
-	}
-	else if (colour == "yellow") {
-		SetConsoleTextAttribute(h, 0xE0);
-	}
-	else if (colour == "redback") {
-		SetConsoleTextAttribute(h, 0x40);
-	}
-}
+
 
 //Creature class member functions 
 Creature::Creature(string name, int dam = 10):
@@ -102,7 +85,7 @@ void Creature::Talk()
 void Creature::Feed()
 {
 	if (m_Food <= 0) {
-		cout << "\nYour creature has no food!" << endl;
+		cout << "\nYou have no food to feed your creature!" << endl;
 	}
 	else {
 		if (m_Hunger >= m_Food) {
@@ -116,9 +99,6 @@ void Creature::Feed()
 			cout << "\nYou feed " << m_Name << " " << m_Hunger << " food." << endl;
 			m_Hunger = 0;
 			cout << m_Name << " is fully fed." << endl;
-			cout << "As the result of consuming a surplus of food, " << m_Name << " gains " << m_Food << " health." << endl;
-			m_Health += m_Food;
-			m_Food = 0;
 		}
 	}
 }
@@ -148,25 +128,13 @@ void Creature::TakeDam(int dam)
 	m_Health -= dam;
 }
 
-int Creature::GetDam()
-{
-	return m_Damage;
-}
-
-int Creature::GetDodge()
-{
-	return m_Dodge;
-}
-
 bool Creature::IsLiving()
 {
 	if (m_Health > 0) {
 		return true;
 	}
 	else {
-		CFlav("redback");
 		cout << m_Name << " has died!!" << endl;
-		CFlav("reset");
 		return false;
 	}
 }
@@ -183,21 +151,14 @@ bool Creature::IsHitBy(Creature other)
 		return true;
 	}
 	else {
-		CFlav("yellow");
-		cout << "\n" << m_Name << " dodges " << other.GetName() << "'s attack" << endl;
-		CFlav("reset");
+		cout << "\n" << m_Name << " dodges!" << endl;
 		return false;
 	}
 }
 
 void Creature::Training()
 {
-	m_Bloodlust--;
-	cout << "\nYour creature ";
-	CFlav("blue");
-	cout << m_Name;
-	CFlav("reset");
-	cout << " has gained experience" << endl;
+	cout << "\nYour creature " << m_Name << " has gained experience" << endl;
 	random_device rd{};
 	mt19937 engine{ rd() };
 	uniform_real_distribution<float> dist{ 0, 900 };
@@ -214,22 +175,13 @@ void Creature::Training()
 	}
 	switch (critchoice) {
 	case 0: {
-		CFlav("blue");
-		cout << m_Name;
-		CFlav("reset");
-		cout << "'s initiative has increased!" << endl;
+		cout << m_Name << "'s initiative has increased!" << endl;
 		m_Initiative++; }break;
 	case 1: {
-		CFlav("blue");
-		cout << m_Name;
-		CFlav("reset");
-		cout << "'s dodge has increased!" << endl;
+		cout << m_Name << "'s dodge has increased!" << endl;
 		m_Dodge++; }break;
 	case 2: {
-		CFlav("blue");
-		cout << m_Name;
-		CFlav("reset");
-		cout << "'s damage has increased!" << endl;
+		cout << m_Name << "'s damage has increased!" << endl;
 		m_Damage++; }break;
 	}
 }
@@ -275,7 +227,7 @@ void Creature::SpecialUse()
 
 void Creature::SpecialRecharge()
 {
-	m_SpecUse = 4;
+	m_SpecUse = 2;
 }
 
 void Creature::SpecialDefence()
@@ -301,27 +253,23 @@ Dragon::Dragon(string name, int dam):
 
 void Dragon::Attack(Creature *other)
 {
-	CFlav("redback");
-	cout << "\n" << m_Name << " inflicts " << m_Damage << " damage on " << other->GetName() << "\n";
+	cout << "\n" << m_Name << " inflicts " << m_Damage << " damage on " << other->GetName() << endl;
 	other->TakeDam(m_Damage);
-	CFlav("reset");
 }
 
 void Dragon::SpecialAttack(Creature * other)
 {
 	int newdam = m_Damage * (rand() % 2);
 	int initdam = m_Damage * (rand() % 2 + 1);
-	CFlav("redback");
 	cout << "\n" << m_Name << " performs a special attack inflicting " << newdam << " damage on " << other->GetName() << endl;
 	cout << "Because of Demon Rage, the enemy is intimidated and takes " << initdam << " damage to it's initiative" << endl;
-	CFlav("reset");
 	other->TakeDam(newdam);
 	other->InitDam(initdam);
 }
 
 void Dragon::DisplayAttacks()
 {
-	cout << "\n1: Demon Claw attack\n2: Demon Rage (Special Atk)" << endl;
+	cout << "\n1: Demon Claw attack\n2:Demon Rage(Special Atk)" << endl;
 }
 
 Skeleton::Skeleton() :
@@ -336,25 +284,21 @@ Skeleton::Skeleton(string name, int dam) :
 
 void Skeleton::Attack(Creature * other)
 {
-	CFlav("redback");
 	cout << "\n" << m_Name << " inflicts " << m_Damage << " damage on " << other->GetName() << endl;
 	other->TakeDam(m_Damage);
-	CFlav("reset");
 }
 
 void Skeleton::SpecialAttack(Creature * other)
 {
 	int newdam = m_Damage * (rand() % 5 + 1);
-	CFlav("redback");
 	cout << "\n" << m_Name << " performs a special attack inflicting " << newdam << " damage on " << other->GetName() << endl;
 	cout << "Your attack is heavier due to Revenge of the Dead" << endl;
-	CFlav("reset");
 	other->TakeDam(newdam);
 }
 
 void Skeleton::DisplayAttacks()
 {
-	cout << "\n1: Skeleton Bone attack\n2: Revenge of the Dead (Special Atk)" << endl;
+	cout << "\n1: Skeleton Bone attack\n2:Revenge of the Dead(Special Atk)" << endl;
 }
 
 Spirit::Spirit():
@@ -369,27 +313,23 @@ Spirit::Spirit(string name, int dam):
 
 void Spirit::Attack(Creature * other)
 {
-	CFlav("redback");
 	cout << "\n" << m_Name << " inflicts " << m_Damage << " damage on " << other->GetName() << endl;
 	other->TakeDam(m_Damage);
-	CFlav("reset");
 }
 
 void Spirit::SpecialAttack(Creature * other)
 {
 	int newdam = m_Damage * (rand() % 2);
 	int dodgedam = m_Damage * (rand() % 3);
-	CFlav("redback");
 	cout << "\n" << m_Name << " performs a special attack inflicting " << newdam << " damage on " << other->GetName() << endl;
 	cout << "Because of Spectral Fear, the enemy takes " << dodgedam << " damage affecting it's ability to dodge" << endl;
-	CFlav("reset");
 	other->TakeDam(newdam);
 	other->DodgeDam(dodgedam);
 }
 
 void Spirit::DisplayAttacks()
 {
-	cout << "\n1: Spirit Spite attack\n2: Spectral Fear (Special Atk)" << endl;
+	cout << "\n1: Spirit Spite attack\n2:Spectral Fear(Special Atk)" << endl;
 }
 
 
@@ -400,7 +340,7 @@ Player::Player(int type):
 	m_pMonsters = new vector<Creature*>;
 	switch (type) {
 	case 1: {
-		cout << "What will you name your first creature servant?" << endl;
+		cout << "What will you name your first creature servent?" << endl;
 		cout << "Name: ";
 		string name;
 		cin >> name;
@@ -409,7 +349,7 @@ Player::Player(int type):
 		m_pMonsters->push_back((C1));
 	}break;
 	case 2: {
-		cout << "What will you name your first creature servant?" << endl;
+		cout << "What will you name your first creature servent?" << endl;
 		cout << "Name: ";
 		string name;
 		cin >> name;
@@ -417,7 +357,7 @@ Player::Player(int type):
 		m_pMonsters->push_back((C1));
 	}break;
 	case 3: {
-		cout << "What will you name your first creature servant?" << endl;
+		cout << "What will you name your first creature servent?" << endl;
 		cout << "Name: ";
 		string name;
 		cin >> name;
@@ -425,7 +365,6 @@ Player::Player(int type):
 		m_pMonsters->push_back((C1));
 	}break;
 	}
-	system("CLS");
 }
 
 Player::~Player()

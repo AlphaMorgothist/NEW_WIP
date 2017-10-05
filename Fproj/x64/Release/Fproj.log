@@ -1,0 +1,12 @@
+﻿  Fproj.cpp
+  world.cpp
+world.cpp(8): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+world.cpp(20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+world.cpp(215): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating code
+  13 of 343 functions ( 3.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    14 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Fproj.vcxproj -> C:\Users\Jimmz\Desktop\Mikes School\Proj\x64\Release\Fproj.exe
+  Fproj.vcxproj -> C:\Users\Jimmz\Desktop\Mikes School\Proj\x64\Release\Fproj.pdb (Full PDB)

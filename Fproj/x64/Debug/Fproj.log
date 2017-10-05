@@ -1,0 +1,13 @@
+﻿  stdafx.cpp
+  world.cpp
+c:\users\jimmz\desktop\mikes school\proj\fproj\world.cpp(8): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\jimmz\desktop\mikes school\proj\fproj\world.cpp(20): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\jimmz\desktop\mikes school\proj\fproj\world.cpp(206): warning C4390: ';': empty controlled statement found; is this the intent?
+c:\users\jimmz\desktop\mikes school\proj\fproj\world.cpp(222): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Fproj.cpp
+  Critter.cpp
+c:\users\jimmz\desktop\mikes school\proj\fproj\critter.cpp(166): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+c:\users\jimmz\desktop\mikes school\proj\fproj\world.cpp(241): warning C4715: 'Rooms::RandRoom': not all control paths return a value
+  Fproj.vcxproj -> C:\Users\Jimmz\Desktop\Mikes School\Proj\x64\Debug\Fproj.exe
+  Fproj.vcxproj -> C:\Users\Jimmz\Desktop\Mikes School\Proj\x64\Debug\Fproj.pdb (Partial PDB)
