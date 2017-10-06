@@ -1,0 +1,51 @@
+Concept:
+
+Randomly generated room encounters. 
+Win condition: room encounter with incredibly low probability.
+
+Probability increases with # of rooms passed
+BOSS FIGHT
+
+Structures:
+
+Inventory: 
+
+ENTITIES:
+
+Rooms as linked lists
+
+
+Classes:
+Necromancer - Skeletons
+Beastermaster - Beast
+Witch Doctor - Spectre
+
+Room Flavors:
+
+Necropolis - Corpses strewn about
+Inferno - Flames abound and bodies fused to walls
+Soul Den - Tortured souls tearing their way up the walls
+
+UNDEAD:
+Skeleton
+Rotting One
+Zombie
+Tortured
+Hulking Mass
+
+BEAST:
+Flame Bat
+HellHound
+Welp
+Serpent
+Marauder
+
+Spectre:
+Apparition
+Ghoul
+Ghast
+Poltergeist
+Wraith
+
+
+
