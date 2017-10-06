@@ -15,6 +15,8 @@ void CFlav(string colour);
 class Creature {
 public:
 	Creature(string name, int dam);
+	Creature(string name, int dam, int hp);
+	Creature(string name, int dam, int hp, int dodge);
 	void Talk();
 	virtual void Feed();
 	string GetName();
@@ -28,6 +30,7 @@ public:
 	bool IsHitBy(Creature other);
 	void Training();
 	void GetFood(int food);
+	int TurnFood();
 	void PassTime();
 	void DodgeDam(int dam);
 	void InitDam(int dam);
@@ -59,7 +62,7 @@ public:
 	void Attack(Creature *other) override;
 	void SpecialAttack(Creature *other) override;
 	void DisplayAttacks() override;
-	//void SpecialDefence() override;
+	void SpecialDefence() override;
 	
 
 };
@@ -71,17 +74,18 @@ public:
 	void Attack(Creature *other) override;
 	void SpecialAttack(Creature *other) override;
 	void DisplayAttacks() override;
-	//void SpecialDefence() override;
+	void SpecialDefence() override;
 };
 
 class Spirit : public Creature {
 public:
 	Spirit();
 	Spirit(string name, int dam);
+	Spirit(string name, int dam, int hp);
 	void Attack(Creature *other) override;
 	void SpecialAttack(Creature *other) override;
 	void DisplayAttacks() override;
-	//void SpecialDefence() override;
+	void SpecialDefence() override;
 };
 
 
@@ -94,11 +98,14 @@ public:
 		virtual int GetType();
 		double GetXP();
 		void GiveXP();
+		void GetKey();
+		int KeyCount();
 
 protected:
 	vector<Creature*> *m_pMonsters;
 	int m_Type;
 	double m_XP = 1;
+	int m_Keys;
 
 	//MAKE CLASS FOR WEPS/POWER UPS;
 	//vector<string>* inventory;
@@ -109,6 +116,7 @@ class DemonKing : public Player {
 public:
 	DemonKing();
 	int GetType() override;
+
 
 private:
 	//Type of player: 1-Demon 2-Necro 3-Spectre
