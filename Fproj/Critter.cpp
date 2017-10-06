@@ -76,6 +76,16 @@ Creature::Creature(string name, int dam = 10):
 {
 }
 
+Creature::Creature(string name, int dam, int hp):
+	m_Name(name), m_Damage(dam),m_Health(hp)
+{
+}
+
+Creature::Creature(string name, int dam, int hp, int dodge):
+	m_Name(name), m_Damage(dam), m_Health(hp),m_Dodge(dodge)
+{
+}
+
 void Creature::Talk()
 {
 	cout << m_Name << " says:" << endl;
@@ -239,6 +249,11 @@ void Creature::GetFood(int food)
 	m_Food += food;
 }
 
+int Creature::TurnFood()
+{
+	return m_Food;
+}
+
 void Creature::PassTime()
 {
 	m_Hunger++;
@@ -321,7 +336,17 @@ void Dragon::SpecialAttack(Creature * other)
 
 void Dragon::DisplayAttacks()
 {
-	cout << "\n1: Demon Claw attack\n2: Demon Rage (Special Atk)" << endl;
+	cout << "\n1: Demon Claw attack\n2: Demon Rage (Special Atk)\n3: Special Defence" << endl;
+}
+
+void Dragon::SpecialDefence()
+{
+	if (GetSpecial() > 0) {
+		cout << "Your creature uses a special defence and gains " << 1 << " initiative!" << endl;
+		m_Initiative++;
+		SpecialUse();
+	}
+	else { cout << "You have no special ability uses left!" << endl; }
 }
 
 Skeleton::Skeleton() :
@@ -354,7 +379,17 @@ void Skeleton::SpecialAttack(Creature * other)
 
 void Skeleton::DisplayAttacks()
 {
-	cout << "\n1: Skeleton Bone attack\n2: Revenge of the Dead (Special Atk)" << endl;
+	cout << "\n1: Skeleton Bone attack\n2: Revenge of the Dead (Special Atk)\n3: Special Defence" << endl;
+}
+
+void Skeleton::SpecialDefence()
+{
+	if (GetSpecial() > 0) {
+		cout << "Your creature uses a special defence and gains " << 1 << " damage!" << endl;
+		m_Damage++;
+		SpecialUse();
+	}
+	else { cout << "You have no special ability uses left!" << endl; }
 }
 
 Spirit::Spirit():
@@ -364,6 +399,11 @@ Spirit::Spirit():
 
 Spirit::Spirit(string name, int dam):
 	Creature(name, dam)
+{
+}
+
+Spirit::Spirit(string name, int dam, int hp):
+	Creature(name, dam, hp)
 {
 }
 
@@ -389,19 +429,43 @@ void Spirit::SpecialAttack(Creature * other)
 
 void Spirit::DisplayAttacks()
 {
-	cout << "\n1: Spirit Spite attack\n2: Spectral Fear (Special Atk)" << endl;
+	cout << "\n1: Spirit Spite attack\n2: Spectral Fear (Special Atk)\n3: Special Defence" << endl;
+}
+
+void Spirit::SpecialDefence()
+{
+	if (GetSpecial() > 0) {
+		cout << "Your creature uses a special defence and gains " << 1 << " dodge!" << endl;
+		m_Dodge++;
+		SpecialUse();
+	}
+	else { cout << "You have no special ability uses left!" << endl; }
 }
 
 
 //Player member functions
-Player::Player(int type):
-	m_pMonsters(NULL)
+Player::Player(int type) :
+	m_pMonsters(NULL), m_Keys(0), m_Type(type)
 {
+	m_pMonsters = new vector<Creature*>;
+	cout << "As you fall towards the ground the flames burn around you." << endl;
+	Sleep(2000);
+	cout << "You slam into the ground and hear footsteps around you" << endl;
+	Sleep(2000);
 	m_pMonsters = new vector<Creature*>;
 	switch (type) {
 	case 1: {
-		cout << "What will you name your first creature servant?" << endl;
-		cout << "Name: ";
+		cout << "You look up and you see a wretched Demon with 3 foot horns" << endl;
+		Sleep(2000);
+		cout << "It barrels towards you mouth agape preparing to tear you to shreds" << endl;
+		Sleep(2000);
+		cout << "As it approaches you throw your hands out in front of you without any hope of survival and yell 'STOP'.\nThe beast stops dead in its tracks and stares directly at you." << endl;
+		Sleep(2000);
+		cout << "You point to the door ahead of you 'There!'.\nThe demon run towards the door." << endl;
+		Sleep(2000);
+		cout << "You realise you are no longer speaking in English, this must be the work of the book.\nWhatever the case, you need to find a way out of here. And the only door out is ahead of you" << endl;
+		cout << "\nWhat will you name your first servant?" << endl;
+		cout << "Name: " << endl;
 		string name;
 		cin >> name;
 		Creature *C1 = new Dragon(name, 40);
@@ -409,7 +473,16 @@ Player::Player(int type):
 		m_pMonsters->push_back((C1));
 	}break;
 	case 2: {
-		cout << "What will you name your first creature servant?" << endl;
+		cout << "You look up and see a shambling skeleton lurching towards you with laughter" << endl;
+		Sleep(2000);
+		cout << "It Runs towards you with maniacal laughter ready to tear at your flesh" << endl;
+		Sleep(2000);
+		cout << "As it approaches you throw your hands out in front of you without any hope of survival and yell 'STOP'.\nIt stops dead in its tracks and stares directly at you." << endl;
+		Sleep(2000);
+		cout << "You point to the door ahead of you 'There!'.\nThe skeleton run towards the door." << endl;
+		Sleep(2000);
+		cout << "You realise you are no longer speaking in English, this must be the work of the book.\nWhatever the case, you need to find a way out of here. And the only door out is ahead of you" << endl;
+		cout << "\nWhat will you name your first servant?" << endl;
 		cout << "Name: ";
 		string name;
 		cin >> name;
@@ -417,12 +490,22 @@ Player::Player(int type):
 		m_pMonsters->push_back((C1));
 	}break;
 	case 3: {
-		cout << "What will you name your first creature servant?" << endl;
+		cout << "You look up and you see a spirit whisping around the room wailing" << endl;
+		Sleep(2000);
+		cout << "It sees you and begins to soar towards you hands stretched out ready to tear you to pieces" << endl;
+		Sleep(2000);
+		cout << "As it approaches you throw your hands out in front of you without any hope of survival and yell 'STOP'.\nThe ghoul stops dead in its tracks and stares directly at you." << endl;
+		Sleep(2000);
+		cout << "You point to the door ahead of you 'There!'.\nThe spirit run towards the door." << endl;
+		Sleep(2000);
+		cout << "You realise you are no longer speaking in English, this must be the work of the book.\nWhatever the case, you need to find a way out of here. And the only door out is ahead of you" << endl;
+		cout << "\nWhat will you name your first servant?" << endl;
 		cout << "Name: ";
 		string name;
 		cin >> name;
 		Creature *C1 = new Spirit(name, 40);
 		m_pMonsters->push_back((C1));
+		
 	}break;
 	}
 	system("CLS");
@@ -452,6 +535,17 @@ double Player::GetXP()
 void Player::GiveXP()
 {
 	m_XP++;
+}
+
+void Player::GetKey()
+{
+	cout << "\nYou have obtained one of the six pieces of the 'Glyph of Redemption'" << endl;
+	m_Keys++;
+}
+
+int Player::KeyCount()
+{
+	return m_Keys;
 }
 
 

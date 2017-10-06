@@ -19,45 +19,141 @@ m_RoomType(RandRoom()), m_pNext(NULL), m_pBack(NULL)
 	
 	random_device rd{};
 	mt19937 engine{ rd() };
-	uniform_real_distribution<double> dist1{ 0.0, 300.0 };
+	uniform_real_distribution<double> dist1{ 0.0, 1000.0 };
 	int chance = dist1(engine);
-	if (chance > 200) {
-		chance = 3;
-	}
-	else if (chance > 100) {
-		chance = 2;
-	}
-	else if (chance > 0) {
-		chance = 1;
-	}
+	
+		if (chance > 900) {chance = 1;}
+	else if (chance > 800){chance = 2;}
+	else if (chance > 700){chance = 3;}
+	else if (chance > 600){chance = 4;}
+	else if (chance > 500){chance = 5;}
+	else if (chance > 400){chance = 6;}
+	else if (chance > 300){chance = 7;}
+	else if (chance > 200){chance = 8;}
+	else if (chance > 100){chance = 9;}
+	else if (chance >= 50) { chance = 10; }
+	else if (chance < 50) { chance = 11; }
 
-	switch (chance) {
-	case 1: {
-		cout << "\nYou see a couple of demons wrestling in the near vicinity. They turn to look at you" << endl;
-		m_Type = 1;
-		Creature *En1 = new Dragon();
-		Creature *En2 = new Dragon();
-		m_Encounters = new vector<Creature*>;
-		m_Encounters->push_back(En1);
-		m_Encounters->push_back(En2); }break;
-	case 2: {
-		m_Type = 2;
-		Creature *En1 = new Skeleton();
-		Creature *En2 = new Skeleton();
-		m_Encounters = new vector<Creature*>;
-		m_Encounters->push_back(En1);
-		m_Encounters->push_back(En2); }break;
-	case 3: {
-		m_Type = 3;
-		Creature *En1 = new Spirit();
-		Creature *En2 = new Spirit();
-		m_Encounters = new vector<Creature*>;
-		m_Encounters->push_back(En1);
-		m_Encounters->push_back(En2); }break;
+	
+
+	//ROOM GEN
+		switch (chance) {
+		case 1: {
+			m_Type = 1;
+			cout << "\nA demon stands before you. It sees you as you walk in and waits on your every move." << endl;
+			cout << chance << endl;
+			Creature *En1 = new Dragon();
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1); }break;
+		case 2: {
+			m_Type = 2;
+			cout << "\nA lone skeleton shambles about the room. It looks directly at you as you walk through the door" << endl;
+			Creature *En1 = new Skeleton();
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1); }break;
+		case 3: {
+			m_Type = 3;
+			cout << "\nA lost soul floats about the chambers. It immidetly twists its head and whips towards you" << endl;
+			Creature *En1 = new Spirit();
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1); }break;
+		case 4: {
+			m_Type = 1;
+			cout << "\nThree demons stand before you, biting and clawing at one another for entertainment.\nAs you walk into the cambers they all look directly at you." << endl;
+			Creature *En1 = new Dragon();
+			Creature *En2 = new Dragon();
+			Creature *En3 = new Dragon();
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+			m_Encounters->push_back(En2);
+			m_Encounters->push_back(En3); }break;
+		case 5: {
+			m_Type = 2;
+			cout << "\nThree skeletons shamble through the chambers, their bones clacking as they walk.\nBones crunch under your feet drawing their attention to you\nand they run towards you cackling" << endl;
+			Creature *En1 = new Skeleton();
+			Creature *En2 = new Skeleton();
+			Creature *En3 = new Skeleton();
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+			m_Encounters->push_back(En2);
+			m_Encounters->push_back(En3); }break;
+		case 6: {
+			m_Type = 3;
+			cout << "\nThree Spectres float throughout the chambers wailing at one another.\nThey sense you as you enter and scream as they fly violently towards you." << endl;
+			Creature *En1 = new Spirit();
+			Creature *En2 = new Spirit();
+			Creature *En3 = new Spirit();
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+			m_Encounters->push_back(En2);
+			m_Encounters->push_back(En3); }break;
+		case 7: {
+			m_Type = 1;
+			cout << "\nAn entire group of demons are roaring and attacking one another.\nAs you walk through they rage towards you with joy/nLeading the charge, The Baron himself." << endl;
+			Creature *En1 = new Dragon();
+			Creature *En2 = new Dragon();
+			Creature *En3 = new Dragon();
+			Creature *En4 = new Dragon();
+			Creature *En5 = new Dragon("Baron", 40);
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+			m_Encounters->push_back(En2);
+			m_Encounters->push_back(En3);
+			m_Encounters->push_back(En4);
+			m_Encounters->push_back(En5); }break;
+		case 8: {
+			m_Type = 2;
+			cout << "\nA large group of skeletons are dancing in a circle in the centre of the room.\nIn the centre stands a large Skeleton with glowing green eyes.\nThe Lich" << endl;
+			Creature *En1 = new Skeleton();
+			Creature *En2 = new Skeleton();
+			Creature *En3 = new Skeleton();
+			Creature *En4 = new Skeleton();
+			Creature *En5 = new Skeleton("Lich", 40);
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+			m_Encounters->push_back(En2);
+			m_Encounters->push_back(En3);
+			m_Encounters->push_back(En4);
+			m_Encounters->push_back(En5); }break;
+		case 9: {
+			m_Type = 3;
+			cout << "\nA group of spirits are floating throughout the chamber screaming in a horrifying song.\nYou look to the centre of the room and see a floating skeleton wrapped in royal armour.\nA Revenant." << endl;
+			Creature *En1 = new Spirit();
+			Creature *En2 = new Spirit();
+			Creature *En3 = new Spirit();
+			Creature *En4 = new Spirit();
+			Creature *En5 = new Spirit("Revenant", 40);
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+			m_Encounters->push_back(En2);
+			m_Encounters->push_back(En3);
+			m_Encounters->push_back(En4);
+			m_Encounters->push_back(En5); }break;
+		case 10: {
+			m_Type = 0;
+			cout << "\nThe cold embrace of the abyss spreads through your veins like a thousand knives\nThe darkness encroaches as the master of this domain approaches\nDeath has found you." << endl;
+			Creature *En1 = new Spirit();
+			Creature *En2 = new Dragon();
+			Creature *En3 = new Skeleton();
+			Creature *En4 = new Spirit();
+			Creature *En5 = new Spirit("Death", 66, 1000);
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+			m_Encounters->push_back(En2);
+			m_Encounters->push_back(En3);
+			m_Encounters->push_back(En4);
+			m_Encounters->push_back(En5);
+		}break;
+		case 11: {
+			m_Type = 0;
+			cout << "A shimmering pedestal stands before you.\n A small, imp-like creature scampers around with a piece of the 'Glyph of Redemption'" << endl;
+			Creature *En1 = new Creature("Glyph Imp", 0, 500, 15);
+			m_Encounters = new vector<Creature*>;
+			m_Encounters->push_back(En1);
+		}break;		
 	}
 }
 
-//TO DO: Add special attack counter and choice ability
 void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 {
 	vector<Creature*>::iterator iter;
@@ -127,12 +223,12 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 						cout << "\nChoice: ";
 						while (true) {
 							cin >> choice;
-							if (choice > 0 && choice < 3)break;
+							if (choice > 0 && choice < 4)break;
 							else cout << "Invalid choice. Try again:";
 						}
 						system("CLS");
 						cout << "\n\t\tYour attacks:" << endl;
-						cout << "***********************************************\n" << endl;
+						cout << "***********************************************\n";
 					}
 					else { choice = 1; }
 					switch (choice) {
@@ -169,9 +265,10 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 						}
 					}
 					}break;
+					case 3: { (*iter)->SpecialDefence(); }break;
 					}
-					Sleep(900);
-				}Sleep(900);
+					Sleep(300);
+				}Sleep(200); 
 			}
 		}
 
@@ -195,8 +292,8 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 							}
 						}
 					}
-					Sleep(900);
-				}	Sleep(920);
+					Sleep(400);
+				}	Sleep(320);
 			}
 		}
 		cout << endl;
@@ -221,6 +318,10 @@ void Rooms::Combat(vector<Creature*> &mobs, Player *me)
 		system("pause");
 		system("CLS");
 	} 
+	if (m_Type == 0) {
+		me->GetKey();
+		cout << "\n" << me->KeyCount() << " glyph pieces out of 6" << endl;
+	}
 }
 
 void Rooms::Play(Player *me)
@@ -244,11 +345,10 @@ void Rooms::Play(Player *me)
 		if (resp == 'y' || resp == 'Y') {
 			vector<Creature*>::iterator iter;
 			for (iter = me->GetMonsters()->begin(); iter < me->GetMonsters()->end(); iter++) {
-				//CURRENT WIP
 				CFlav("blue");
 				cout << (*iter)->GetName();
 				CFlav("reset");
-				cout << "\tHP:" << (*iter)->GetHealth() << " DAM:" << (*iter)->GetDam() << " DODGE:" << (*iter)->GetDodge() << " INITIATIVE:" << (*iter)->GetInit() << endl;
+				cout << "\tHP:" << (*iter)->GetHealth() << " DAM:" << (*iter)->GetDam() << " DODGE:" << (*iter)->GetDodge() << " INITIATIVE:" << (*iter)->GetInit() << " FOOD:" << (*iter)->TurnFood() << endl;
 			}
 			for (iter = me->GetMonsters()->begin(); iter < me->GetMonsters()->end(); iter++) {
 				int tempN;
@@ -356,18 +456,38 @@ void World::Play()
 {
 	//Inputs from player for class select and name (op)
 	Player *Plyr = NULL;
-	cout << "\n\t\tWelcome to DaskuG's Inferno" << endl;
+	system("CLS");
+	CFlav("red");
+	cout << "\n\t\tWelcome to DaskuG's 'DamnednatioN'" << endl;
+	CFlav("reset");
+	cout << endl;
 	//Insert flavour for beginning of game
-	cout << "\n\tClass Selection: " << endl;
-	cout << "\n1: Demon King (commands Demons)" << endl;
-	cout << "2: Necromancer (commands Skeletons)" << endl;
-	cout << "3: Spectre (Commands Spirits)" << endl;
+	cout << "The last thing you remember is robbing some dumb old broad of her bag." << endl;
+	Sleep(2000);
+	cout << "Then feeling of the cold metal barrel pressed against your head..." << endl;
+	Sleep(2000);
+	cout << "The BANG of a bullet blast..." << endl;
+	Sleep(2000);
+	cout << "The looming shadow of Death towering above you." << endl;
+	Sleep(2000);
+	cout << "The grim spectre grips you by the throat, and begins crushing your esophagus." << endl;
+	Sleep(2000);
+	cout << "A hole of flames opens up behind you as he motions to throw your soul into hell." << endl;
+	Sleep(2000);
+	cout << "As he pulls you in to drain your essence your theive's instinct reflexively reaches into his cloack and you catch\na glimpse of three Tomes." << endl;
+	Sleep(2000);
+	cout << endl;
+	cout << "Which Tome do you grab?" << endl;
+	cout << "Tome With Etched Horn - The Tome of Demons" << endl;
+	cout << "Tome Bound with Flesh - The Tome of the Dead" << endl;
+	cout << "Tome of Faces - The Tome of Lost Souls" << endl;
 	cout << "Choice: ";
 	int choice;
 	while (true) {
 		cin >> choice;
 		if (choice > 0 && choice < 4)break;
 	}
+	cout << endl;
 	switch (choice) {
 	default: break;
 	case 1: {Plyr = new DemonKing();}break;
@@ -376,7 +496,7 @@ void World::Play()
 	}
 	
 	vector<Creature*> temp = *(Plyr->GetMonsters());
-	while (!temp.empty()) {
+	while (!temp.empty() && Plyr->KeyCount() != 6) {
 		m_pCurrent->Play(Plyr);
 		temp = *(Plyr->GetMonsters());
 		if (!temp.empty()) {
@@ -396,6 +516,11 @@ void World::Play()
 				}
 			}
 		}
+	}
+	if (Plyr->KeyCount() == 6) {
+		system("CLS");
+		cout << "\n\tYou have used the 'Glyph of Redemption' to cleanse your soul and escape from Hell" << endl;
+		cout << "Congratulations, you have won the game. Not even Death can stop you!!" << endl;
 	}
 }
 
